@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { api} from "../../api/api";
-import { Login } from "../../api/login/login";
+import { Login,authMe,Refresh } from "../../api/login/login";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
@@ -29,7 +29,7 @@ let JwtSample = () => {
     return (
         <div>
             <button onClick={() => {
-                api.get('/auth/me').then(res => {
+               authMe().then(res => {
                     Swal.fire({
                         icon: 'success',
                         title: ' Token there'
@@ -43,7 +43,7 @@ let JwtSample = () => {
             }}>On click to Auth</button>
             <br />
             <button onClick={() => {
-                api.post('/auth/refresh', {
+               Refresh({
                     refreshToken: Cookies.get("Refresh-token"), // Optional, if not provided, the server will use the cookie
                     expiresInMins: 30,
                 }).then(res => {
