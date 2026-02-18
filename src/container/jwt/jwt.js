@@ -15,6 +15,7 @@ let JwtSample = () => {
         }
         Login(data).then(res => {
             Cookies.set("Auth-token", res.data.accessToken)
+            Cookies.set("Auth",1)
             Cookies.set("Refresh-token", res.data.refreshToken)
             // setToken(res.data.accessToken);
             // setRefreshToken(res.data.refreshToken)
@@ -22,6 +23,7 @@ let JwtSample = () => {
             // console.log("accessToken", jwtDecode(res.data.accessToken))
         }).catch(e => {
             console.log(e)
+            Cookies.set("Auth",0)
         })
 
     }, [])
@@ -34,7 +36,9 @@ let JwtSample = () => {
                         icon: 'success',
                         title: ' Token there'
                     })
+                    Cookies.set("Auth",1)
                 }).catch(e => {
+                    Cookies.set("Auth",0)
                     Swal.fire({
                         icon: 'error',
                         title: 'No Token'
@@ -48,12 +52,14 @@ let JwtSample = () => {
                     expiresInMins: 30,
                 }).then(res => {
                     Cookies.set("Auth-token", res.data.accessToken)
+                     Cookies.set("Auth",1)
                     Cookies.set("Refresh-token", res.data.refreshToken)
                     Swal.fire({
                         icon: 'success',
                         title: ' Token there'
                     })
                 }).catch(e => {
+                     Cookies.set("Auth",0)
                     Swal.fire({
                         icon: 'error',
                         title: 'No Token'
